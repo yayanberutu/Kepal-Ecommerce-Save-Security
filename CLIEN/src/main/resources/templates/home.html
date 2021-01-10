@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Kepal</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container">
+  	<h1>Data Kamar</h1>
+  	<form action="#" th:action="@{/Kamar}" th:object="${kamar}" method="post">
+  		<table class="table" id="viewDataKamar">
+		  <thead>
+		    <tr>
+		      <th scope="col">Kamar Id</th>
+		      <th scope="col">Kategori</th>
+		      <th scope="col">Harga Kamar</th>
+		      <th scope="col">Jumlah Tersedia</th>
+		      <th scope="col">Action</th>
+		    </tr>
+		  </thead>
+		    <tbody>
+			    <tr th:each="i : ${listKamar}">
+			      <th scope="row" th:text="${i.kamarid}"></th>
+			      <td th:text="${i.kategori}"></td>
+			      <td th:text="${i.harga_kamar}"></td>
+			      <td th:text="${i.jumlah_tersedia}"></td>
+			      <td><a th:href="@{'pemesanan/' + i.kamarid}" class="btn btn-primary">Pesan</a> </td>
+			    </tr>
+			  </tbody>
+		</table>
+	</form>
+  </div>
+</body>
+</html>
