@@ -1,5 +1,6 @@
 package com.buyer.model;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,12 +17,35 @@ public class User {
 	private String email;
  
 	private boolean enabled;
-     
+	 private String one_time_password;
+	 
+	 private Date otp_requested_time;
 	private Set<Role> roles = new HashSet<>();
 
 	public User() {
 //		super();
 	}
+
+	
+	public String getOne_time_password() {
+		return one_time_password;
+	}
+
+
+	public void setOne_time_password(String one_time_password) {
+		this.one_time_password = one_time_password;
+	}
+
+
+	public Date getOtp_requested_time() {
+		return otp_requested_time;
+	}
+
+
+	public void setOtp_requested_time(Date otp_requested_time) {
+		this.otp_requested_time = otp_requested_time;
+	}
+
 
 	public Long getId() {
 		return id;

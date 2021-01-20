@@ -1,5 +1,6 @@
 package com.buyer.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -20,8 +21,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 }
 	     
 	 @Bean
-	 public BCryptPasswordEncoder passwordEncoder() {
-		 return new BCryptPasswordEncoder();
+	 public ShaPasswordEncoder passwordEncoder() {
+		 return new ShaPasswordEncoder();
 	 }
 	 
 	 @Bean
@@ -42,17 +43,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 @Override
 	 protected void configure(HttpSecurity http) throws Exception {
 		 http.authorizeRequests()
-		 	.antMatchers("/").hasAnyAuthority("USER", "ADMIN")
-		 	.antMatchers("/kamar").hasAnyAuthority("ADMIN", "CREATOR")
-		 	.antMatchers("/edit/**").hasAnyAuthority("ADMIN")
-		 	.antMatchers("/delete/**").hasAuthority("ADMIN")
-		 	.anyRequest().authenticated()
-		 	.and()
-		 	.formLogin().permitAll()
-		 	.and()
-		 	.logout().permitAll()
-		 	.and()
-		 	.exceptionHandling().accessDeniedPage("/403")
-		 	;
+		 	.antMatchers("/", "/home").hasAnyAuthority("USER", "ADMIN")
+		 	.antMatchers("/pemesanan/**").hasAnyAuthority("USER")
+		 	.antMatchers("/kamar/**").hasAnyAuthority("USER")
+		 	.antMatchers("/pembayaran/**").hasAuthority("USER")
+		 	.antMatchers("/admin/**").hasAuthority("ADMIN")
+		 	.anyRequest().authenticated();
+		 http.formLogin()
+		 	.loginPage("/login")
+		 	.usernameParameter("username")
+		 	.passwordParameter("password")
+		 	.defaultSuccessUrl("/home").permitAll();
+		 http.logout()
+		 .logoutUrl("logout")
+		 .logoutSuccessUrl("/login")
+		 .permitAll()
+		 .invalidateHttpSession(true);
 	    }
+
 }
